@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yufei Wang</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 850: '#1e293b' }
+            },
+            fontFamily: {
+              sans:['Inter', 'system-ui', 'sans-serif'],
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+              'fade-in': 'fadeIn 1s ease-out forwards',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body, html { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react">
+        const { useState, useEffect, useRef, useMemo } = React;
+
+const SITE_DATA = {
+    profile: {
+        name: "Yufei Wang",
+        role: "PhD Researcher / Guest Researcher",
+        avatar: "Profile_Avatar.webp"
+    },
+    awards:[
+        { year: "2025", title: "4-Year Fully-Funded External Doctoral Fellowship", color: "amber" },
+        { year: "2023", title: "National Scholarship", org: "Chinese Ministry of Education", color: "slate" },
+        { year: "2023", title: "Outstanding Student Award", org: "", color: "slate" },
+        { year: "2022", title: "Provincial Scholarship", org: "Department of Education of Inner Mongolia", color: "slate" }
+    ],
+    clinical:[
+        {
+            period: "Sep 2022 - Jul 2025",
+            role: "Resident Physician (Standardized Training)",
+            hospital: "Inner Mongolia People's Hospital, China",
+            details:[
+                "Certification: Passed the Chinese National Medical Licensing Examination.",
+                "Completed comprehensive clinical rotations with a focus on cardiovascular disease management."
+            ]
+        },
+        {
+            period: "Sep 2019 - Jul 2022",
+            role: "Clinical Intern",
+            hospital: "Yu-quan District Clinic, Hohhot City, China",
+            details:[
+                "Assisted in general clinical practice, patient management, and primary care duties."
+            ]
+        }
+    ],
+    publications:[
+        {
+            status: "Accepted",
+            title: "The Association Between Cognitive Function Trajectories and All-Cause Mortality in Middle-Aged and Older Chinese Adults with Cardiovascular Disease: A Longitudinal Study from CHARLS",
+            authors: "Wang Y, et al. (2nd Author)",
+            highlight: "Uncovered distinct cognitive trajectories using a robust machine learning framework, overcoming the constraints of standard parametric models in highly heterogeneous data.",
+            highlightLayout: "left",
+            images:[{ src: "Pub1_Clusters.webp", caption: "Clustering Metrics Comparison" }],
+            pdfUrl: "https://www.sciencedirect.com/science/article/pii/S2772487526000139/pdfft?md5=b0f9931e3850998a37f3fc259f4213b9&pid=1-s2.0-S2772487526000139-main.pdf"
+        },
+        {
+            status: "Published",
+            title: "Usage of table salt and risk of all-cause and cardiovascular disease mortality among patients with diabetes: a national population-based cohort study",
+            authors: "Wang Y, Chen H. (First Author)",
+            journal: "Diabetol Metab Syndr",
+            year: "2024",
+            doi: "10.1186/s13098-024-01511-9",
+            jcr: "Q2",
+            if: "3.9",
+            highlight: "Challenged universal guidelines: Demonstrated that excessively low sodium intake may paradoxically increase mortality risk specifically in diabetic populations.",
+            highlightLayout: "right",
+            images:[{ src: "Pub2_Salt_Mortality.webp", caption: "Cumulative Incidence of Mortality" }],
+            pdfUrl: "https://link.springer.com/content/pdf/10.1186/s13098-024-01511-9.pdf"
+        },
+        {
+            status: "Published",
+            title: "Association between blood urea nitrogen to serum albumin ratio and in-hospital mortality in critical patients with diabetic ketoacidosis: a retrospective analysis of the eICU database",
+            authors: "Chen H, Wang Y, Ji R, Li M. (Co-first author)",
+            journal: "Front Endocrinol",
+            year: "2024",
+            doi: "10.3389/fendo.2024.1411891",
+            jcr: "Q1",
+            if: "4.6",
+            highlight: "As co-first author, drafted the manuscript and enhanced survival analysis reliability via systematic covariate screening and rigorous bias control.",
+            highlightLayout: "left",
+            images:[
+                { src: "Pub3_DoseResponse.webp", caption: "Nonlinear Dose-Response" }
+            ],
+            pdfUrl: "https://public-pages-files-2025.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2024.1411891/pdf"
+        },
+        {
+            status: "Published",
+            title: "A nonlinear relationship between systemic inflammation response index and short-term mortality in patients with acute myocardial infarction: a retrospective study from MIMIC-IV",
+            authors: "Wang Y, Chen H. (First author)",
+            journal: "Front Cardiovasc Med",
+            year: "2023",
+            doi: "10.3389/fcvm.2023.1208171",
+            jcr: "Q2",
+            if: "2.9",
+            highlight: "A humble beginning of my research journey, sparking a lasting passion for clinical evidence-based medicine.",
+            highlightLayout: "right",
+            images:[{ src: "Pub4_SIRI_Mortality.webp", caption: "KM Survival Curves (30-day & 90-day)" }],
+            pdfUrl: "https://public-pages-files-2025.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2023.1208171/pdf"
+        }
+    ],
+    ecgWorkflow:[
+        { src: "Step1_Identity.webp", step: "Identify Annotator" },
+        { src: "Step2_Load.webp", step: "Load ECG Data" },
+        { src: "Step3_Check.webp", step: "Select Arrhythmia Type" },
+        { src: "Step4_Save.webp", step: "Auto-save to .csv" }
+    ]
+};
+
+const Icons = {
+    FileText: () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>,
+    Award: ({ className }) => <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>,
+    Code: ({ size = 18 }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+    ExternalLink: () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>,
+    Download: () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>,
+    Maximize: () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>,
+    X: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
+    ArrowRight: () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>,
+    GraduationCap: ({ className }) => <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+    Globe: ({ className }) => <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>,
+    Briefcase: ({ className }) => <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
+    Activity: ({ className }) => <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+};
+
+const SectionTitle = ({ children }) => (
+    <h2 className="text-3xl font-extrabold text-slate-800 mb-8 flex items-center gap-3 border-b-2 border-slate-100 pb-4 tracking-tight">
+        {children}
+    </h2>
+);
+
+const Card = ({ children, className = "", style }) => (
+    <div
+        className={`backdrop-blur-md rounded-2xl shadow-sm border border-slate-100 p-6 hover:shadow-lg transition-all duration-300 ${className}`}
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', ...style }}
+    >
+        {children}
+    </div>
+);
+
+const Badge = ({ children, type = "neutral" }) => {
+    const styles = {
+        neutral: "bg-slate-100 text-slate-600 border-slate-200",
+        success: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        blue: "bg-blue-50 text-blue-700 border-blue-200",
+        amber: "bg-amber-50 text-amber-700 border-amber-200",
+        rose: "bg-rose-50 text-rose-700 border-rose-200", 
+        purple: "bg-indigo-50 text-indigo-700 border-indigo-200" 
+    };
+    return (
+        <span className={`px-2.5 py-1 rounded-md text-xs font-bold border uppercase tracking-wider ${styles[type] || styles.neutral}`}>
+            {children}
+        </span>
+    );
+};
+
+const ParticleWave = () => {
+    const canvasRef = useRef(null);
+
+    const config = useMemo(() => ({
+        lineColor: 'rgba(200, 200, 200, 1)',
+        backgroundColor: '#FFFFFF',
+        lines: 45,
+        amplitude: 60,
+        frequency: 0.002,
+        speed: 0.0013,
+        ySpacing: 8,
+        pulseChance: 0.014,
+        pulseColor: '255, 230, 60',
+        pulseSpeedMin: 3,
+        pulseSpeedMax: 6,
+        pulseWidth: 200,
+    }),[]);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let animationFrameId;
+        let width = 0;
+        let height = 0;
+        let time = 0;
+        let pulses =[];
+
+        const resize = () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        };
+
+        const calculateY = (x, i, t, cy) => {
+            const primaryWave = Math.sin(x * config.frequency + t * config.speed + i * 0.05) * config.amplitude;
+            const secondaryWave = Math.cos(x * config.frequency * 1.5 + t * config.speed * 1.2 + i * 0.1) * (config.amplitude * 0.4);
+            const irregularity = Math.sin(x * 0.01 + t * 0.013) * 5;
+            const bundleWarp = Math.sin(t * 0.01 + x * 0.0005) * 40;
+            const variableSpacing = config.ySpacing * (1 + 0.3 * Math.cos(x * 0.005 + t * 0.007));
+            const yOffset = (i - config.lines / 2) * variableSpacing;
+            return cy + yOffset + primaryWave + secondaryWave + irregularity + bundleWarp;
+        };
+
+        const render = () => {
+            ctx.fillStyle = config.backgroundColor;
+            ctx.fillRect(0, 0, width, height);
+            const centerY = height / 2;
+            const step = 4;
+
+            for (let i = 0; i < config.lines; i++) {
+                ctx.beginPath();
+                const normalizedIndex = i / config.lines;
+                const distFromCenter = Math.abs(normalizedIndex - 0.5) * 2;
+                const alpha = 0.8 * (1 - Math.pow(distFromCenter, 2));
+                ctx.strokeStyle = `rgba(180, 180, 180, ${alpha})`;
+                ctx.lineWidth = 1.5;
+                for (let x = 0; x <= width + step; x += step) {
+                    const y = calculateY(x, i, time, centerY);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+
+            if (Math.random() < config.pulseChance) {
+                pulses.push({
+                    rowIndex: Math.floor(Math.random() * config.lines),
+                    x: -config.pulseWidth,
+                    speed: config.pulseSpeedMin + Math.random() * (config.pulseSpeedMax - config.pulseSpeedMin),
+                    width: config.pulseWidth + Math.random() * 50
+                });
+            }
+
+            pulses.forEach(p => { p.x += p.speed; });
+            pulses = pulses.filter(p => p.x < width + p.width);
+
+            ctx.lineCap = 'round';
+            for (const p of pulses) {
+                const normalizedIndex = p.rowIndex / config.lines;
+                const distFromCenter = Math.abs(normalizedIndex - 0.5) * 2;
+                const rowAlpha = 1 - Math.pow(distFromCenter, 2);
+                const pulseStep = 5;
+                const trailSegments = Math.ceil(p.width / pulseStep);
+                for (let j = 0; j < trailSegments; j++) {
+                    const currentX = p.x - (j * pulseStep);
+                    const nextX = currentX - pulseStep;
+                    if (currentX < 0 && nextX < 0) continue;
+                    const progress = j / trailSegments;
+                    const intensity = Math.max(0, (1 - progress) * rowAlpha);
+                    if (intensity < 0.05) continue;
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(${config.pulseColor}, ${intensity})`;
+                    ctx.lineWidth = 2.5;
+                    const y1 = calculateY(currentX, p.rowIndex, time, centerY);
+                    const y2 = calculateY(nextX, p.rowIndex, time, centerY);
+                    ctx.moveTo(currentX, y1);
+                    ctx.lineTo(nextX, y2);
+                    ctx.stroke();
+                }
+            }
+            time += 1;
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        resize();
+        window.addEventListener('resize', resize);
+        render();
+
+        return () => {
+            window.removeEventListener('resize', resize);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, [config]);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+            style={{ backgroundColor: '#FFFFFF' }}
+        />
+    );
+};
+
+const ImageModal = ({ data, onClose }) => {
+    if (!data) return null;
+
+    useEffect(() => {
+        const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose]);
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-sm transition-opacity duration-300" onClick={onClose}>
+            <div className="relative max-w-7xl w-full max-h-screen flex flex-col items-center justify-center animate-fade-in" onClick={e => e.stopPropagation()}>
+                <button onClick={onClose} className="absolute -top-12 right-0 md:top-4 md:right-4 p-2 text-white/70 hover:text-white transition-colors bg-black/20 rounded-full">
+                    <Icons.X />
+                </button>
+                <img src={data.src} alt={data.caption} className="max-w-full max-h-[85vh] object-contain rounded-md shadow-2xl" />
+                {data.caption && <p className="text-white/80 mt-4 text-center text-sm font-medium">{data.caption}</p>}
+            </div>
+        </div>
+    );
+};
+
+const PublicationItem = ({ publication, onFullscreen }) => {
+    const formatAuthors = (authorsStr) => {
+        const parts = authorsStr.split('Wang Y');
+        if (parts.length === 1) return <span className="text-slate-600">{authorsStr}</span>;
+        return (
+            <span className="text-slate-600">
+                {parts[0]}<span className="font-extrabold text-slate-900 border-b-2 border-amber-300">Wang Y</span>{parts[1]}
+            </span>
+        );
+    };
+
+    return (
+        <Card className="mb-6 border-l-4 border-l-slate-300 hover:border-l-blue-500 transition-colors">
+            <div className="flex flex-col gap-5">
+                <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                        <Badge type={publication.status === "Published" ? "success" : "blue"}>{publication.status}</Badge>
+                        {publication.jcr && <Badge type={publication.jcr === 'Q1' ? 'rose' : 'amber'}>{publication.jcr}</Badge>}
+                        {publication.if && <Badge type="purple">IF: {publication.if}</Badge>}
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 leading-snug mb-2">{publication.title}</h3>
+                    <p className="text-sm mb-3">{formatAuthors(publication.authors)}</p>
+                    
+                    {(publication.journal || publication.year || publication.doi) && (
+                        <p className="text-slate-500 text-sm mb-4 font-medium">
+                            {publication.journal} {publication.year && `(${publication.year})`} {publication.doi && <span className="text-slate-400 font-normal">| {publication.doi}</span>}
+                        </p>
+                    )}
+                    
+                    <div className="flex flex-wrap gap-3 mb-2">
+                        {publication.doi && (
+                            <a href={`https://doi.org/${publication.doi}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+                                <Icons.ExternalLink /> DOI
+                            </a>
+                        )}
+                        {publication.pdfUrl && (
+                            <a href={publication.pdfUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 hover:bg-slate-200 transition-colors shadow-sm">
+                                <Icons.Download /> PDF
+                            </a>
+                        )}
+                    </div>
+                </div>
+
+                {publication.images && publication.images.length > 0 && (
+                    <div className="w-full mt-4 bg-slate-50/50 rounded-xl p-4 md:p-6 border border-slate-100">
+                        {publication.images.map((img, idx) => {
+                            const showHighlight = publication.highlight && idx === 0;
+                            const isLeft = publication.highlightLayout === 'left';
+                            
+                            const highlightContent = showHighlight ? (
+                                <div className="flex-1 flex flex-col justify-center">
+                                    <blockquote className="text-base md:text-lg font-medium text-slate-700 leading-relaxed border-l-4 border-amber-400 pl-5 py-1 italic">
+                                        "{publication.highlight}"
+                                    </blockquote>
+                                </div>
+                            ) : null;
+
+                            const imageContent = (
+                                <div className={`flex flex-col gap-3 group w-full ${showHighlight ? 'flex-1' : 'max-w-2xl mx-auto'} relative transition-all`}>
+                                    <div className="rounded-lg overflow-hidden border border-slate-200 shadow-sm bg-white relative w-full group-hover:shadow-md transition-shadow">
+                                        <img
+                                            src={img.src}
+                                            alt={img.caption}
+                                            onClick={() => onFullscreen(img)}
+                                            className="w-full h-auto object-contain p-2 cursor-zoom-in"
+                                        />
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onFullscreen(img); }}
+                                            className="absolute top-2 right-2 bg-white/90 text-slate-600 p-1.5 rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity border border-slate-100"
+                                        >
+                                            <Icons.Maximize />
+                                        </button>
+                                    </div>
+                                    <p className="text-xs font-medium text-slate-500 text-center">{img.caption}</p>
+                                </div>
+                            );
+
+                            return (
+                                <div key={idx} className="flex flex-col md:flex-row gap-8 items-center">
+                                    {showHighlight && isLeft && highlightContent}
+                                    {imageContent}
+                                    {showHighlight && !isLeft && highlightContent}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        </Card>
+    );
+};
+
+function App() {
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isWorkflowExpanded, setIsWorkflowExpanded] = useState(false);
+    
+    const { profile, publications, ecgWorkflow, awards, clinical } = SITE_DATA;
+
+    return (
+        <div className="min-h-screen text-slate-800 relative pb-20">
+            <ParticleWave />
+            <ImageModal data={selectedImage} onClose={() => setSelectedImage(null)} />
+            
+            <main className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 pt-16 md:pt-24">
+                
+                {/* 个人简介模块 */}
+                <div className="flex flex-col gap-10 mb-20 max-w-4xl mx-auto">
+                    <div className="animate-fade-in-up">
+                        <Card className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 p-8 md:p-12 border-none shadow-xl bg-white/60 backdrop-blur-xl">
+                            <div className="shrink-0 relative">
+                                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                                    <img 
+                                      src={profile.avatar} 
+                                      alt={profile.name} 
+                                      className="w-full h-full object-cover" 
+                                      onError={(e) => {
+                                        const target = e.target;
+                                        target.style.display='none'; 
+                                        target.parentElement.style.backgroundColor='#e2e8f0';
+                                      }} 
+                                    />
+                                </div>
+                                <div className="absolute bottom-2 right-2 bg-emerald-500 w-5 h-5 rounded-full border-4 border-white"></div>
+                            </div>
+                            
+                            <div className="flex-1 text-center md:text-left flex flex-col justify-center">
+                                <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">{profile.name}</h1>
+                                
+                                <div className="flex flex-col gap-3 text-sm md:text-base font-medium text-slate-700">
+                                    <div className="flex items-center justify-center md:justify-start gap-3">
+                                        <div className="p-1.5 bg-blue-100 rounded text-blue-600"><Icons.GraduationCap className="w-4 h-4" /></div>
+                                        <span>MSc in Clinical Medicine (Cardiology)</span>
+                                    </div>
+                                    <div className="flex items-center justify-center md:justify-start gap-3">
+                                        <div className="p-1.5 bg-amber-100 rounded text-amber-600"><Icons.Award className="w-4 h-4" /></div>
+                                        <span>4-Year Fully-Funded External Doctoral Fellowship</span>
+                                    </div>
+                                    <div className="flex items-center justify-center md:justify-start gap-3">
+                                        <div className="p-1.5 bg-slate-200 rounded text-slate-600"><Icons.Globe className="w-4 h-4" /></div>
+                                        <span>IELTS Score: 7.0</span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 pt-6 border-t border-slate-200/60 text-left bg-slate-50/50 -mx-4 px-4 pb-4 md:-mx-6 md:px-6 rounded-lg md:rounded-xl">
+                                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <Icons.Briefcase className="w-3 h-3" /> Current Position
+                                    </h2>
+                                    <div className="space-y-1">
+                                        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-1">
+                                            <h3 className="font-bold text-slate-800 text-lg">PhD Researcher / Guest Researcher</h3>
+                                            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 inline-block w-fit">Nov 2025 – Present</span>
+                                        </div>
+                                        <p className="text-slate-700 font-medium">Erasmus MC, Rotterdam, The Netherlands</p>
+                                        <div className="text-sm text-slate-600 mt-3 space-y-1 bg-white p-3 rounded-md border border-slate-100 shadow-sm">
+                                            <p className="flex gap-2">
+                                                <span className="font-semibold text-slate-400 shrink-0">Funding:</span> 
+                                                <span>Recipient of a <strong>4-Year Fully-Funded External Doctoral Fellowship</strong>.</span>
+                                            </p>
+                                            <p className="flex gap-2">
+                                                <span className="font-semibold text-slate-400 shrink-0">Focus:</span> 
+                                                <span>Cardiovascular diseases.</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
+                </div>
+
+                {/* 研究经历 */}
+                <section className="animate-fade-in mb-20" style={{ animationDelay: '0.1s' }}>
+                    <SectionTitle><Icons.Code /> Research Experience</SectionTitle>
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            {/* 卡片1 */}
+                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-rose-500">
+                                <div className="mb-4">
+                                    <Badge type="blue">Dec 2023 - Present</Badge>
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">AI Prediction of In-Hospital Cardiac Arrests</h3>
+                                <p className="text-sm text-slate-500 font-bold mb-4">Role: Lead Author (Part-time Remote / Advisory Role)</p>
+                                
+                                <div className="space-y-3 text-slate-600 text-sm mt-auto bg-rose-50/50 p-4 rounded-lg border border-rose-100/50">
+                                    <p><strong className="text-rose-600 block mb-1">Clinical Target:</strong> Address the critical &lt;20% survival rate of in-hospital cardiac arrest.</p>
+                                    <p><strong className="text-slate-800 block mb-1">Algorithm:</strong> Develop <strong>Deep Learning models</strong> for life-saving early warnings.</p>
+                                </div>
+                            </Card>
+
+                            {/* 卡片2 */}
+                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-emerald-500">
+                                <div className="mb-4">
+                                    <Badge type="blue">Jul 2025 - Present</Badge>
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">Regional ECG Diagnostic Innovation Platform</h3>
+                                <p className="text-sm text-slate-500 font-bold mb-4">Role: Lead Author (Part-time Remote / Advisory Role)</p>
+                                
+                                <div className="space-y-3 text-slate-600 text-sm mt-auto bg-emerald-50/50 p-4 rounded-lg border border-emerald-100/50">
+                                    <p><strong className="text-emerald-600 block mb-1">Data Foundation:</strong> Provide highly representative, real-world ECG data to power AI models.</p>
+                                    <p><strong className="text-slate-800 block mb-1">Infrastructure:</strong> Construct a <strong>provincial database</strong> via a remote diagnostic network.</p>
+                                </div>
+                            </Card>
+                        </div>
+                        
+                        <div className="mt-10">
+                            <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-3">
+                                <span className="w-1.5 h-6 bg-slate-800 rounded-full inline-block"></span>Self-developed ECG-Labeler for Clinicians
+                            </h3>
+                            <Card className="bg-slate-900 text-slate-300 border-slate-700 !p-0 overflow-hidden shadow-2xl">
+                                <div className="p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-850">
+                                    <p className="text-sm text-slate-400 font-medium">Currently utilized by 5 cardiologists, accelerating the annotation of over 2,000 ECG segments.</p>
+                                    <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                                        <button onClick={() => setIsWorkflowExpanded(!isWorkflowExpanded)} className="text-sm font-bold flex items-center gap-2 text-slate-300 hover:text-white transition-colors bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
+                                            {isWorkflowExpanded ? 'Hide Workflow' : 'Show Workflow'}
+                                        </button>
+                                        <a href="HumanCheck_v7.py" target="_blank" className="shrink-0 text-sm font-bold flex items-center gap-2 text-white bg-blue-600 border border-blue-500 px-4 py-2 rounded-lg hover:bg-blue-500 transition-all shadow-md">
+                                            <Icons.Code size={16} /> View Source
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                {isWorkflowExpanded && (
+                                    <div className="bg-slate-950 p-6 animate-fade-in border-t border-slate-800">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative transition-all duration-500">
+                                            {ecgWorkflow.map((item, i) => (
+                                                <div key={i} className="flex flex-col items-center md:items-start group relative">
+                                                    {i < ecgWorkflow.length - 1 && (
+                                                        <>
+                                                            <div className="hidden lg:block absolute -right-6 top-1/3 text-slate-600"><Icons.ArrowRight /></div>
+                                                            <div className="hidden md:block lg:hidden absolute -right-4 top-1/3 text-slate-600">{i % 2 === 0 ? <Icons.ArrowRight /> : null}</div>
+                                                        </>
+                                                    )}
+                                                    <div className="w-full rounded-lg bg-slate-900 overflow-hidden border border-slate-700 mb-3 shadow-lg aspect-auto">
+                                                        <img
+                                                            src={item.src}
+                                                            alt={item.step}
+                                                            onClick={() => setSelectedImage({ src: item.src, caption: item.step })}
+                                                            className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 cursor-zoom-in"
+                                                        />
+                                                    </div>
+                                                    <div className="w-full text-center md:text-left">
+                                                        <div className="inline-block px-2.5 py-1 rounded bg-blue-900/40 text-blue-300 text-[10px] font-bold mb-2 uppercase tracking-wider border border-blue-800/50">Step {i + 1}</div>
+                                                        <p className="text-sm font-bold text-slate-200">{item.step}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </Card>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="animate-fade-in mb-20" style={{ animationDelay: '0.15s' }}>
+                    <SectionTitle><Icons.Activity /> Clinical & Residency Experience</SectionTitle>
+                    <div className="space-y-6">
+                        {clinical.map((item, idx) => (
+                            <Card key={idx} className="border-l-4 border-l-indigo-400 hover:border-l-indigo-500 transition-colors">
+                                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
+                                    <div>
+                                        <h3 className="text-xl font-bold text-slate-900">{item.role}</h3>
+                                        <p className="text-slate-600 font-medium mt-1">{item.hospital}</p>
+                                    </div>
+                                    <Badge type="blue">{item.period}</Badge>
+                                </div>
+                                <ul className="space-y-2 mt-4 text-slate-600 text-sm list-disc list-inside">
+                                    {item.details.map((detail, i) => (
+                                        <li key={i}>{detail}</li>
+                                    ))}
+                                </ul>
+                            </Card>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="animate-fade-in mb-20" style={{ animationDelay: '0.2s' }}>
+                    <SectionTitle><Icons.FileText /> Selected Publications</SectionTitle>
+                    <div className="grid grid-cols-1 gap-8">
+                        {publications.map((pub, idx) => (
+                            <PublicationItem key={idx} publication={pub} onFullscreen={setSelectedImage} />
+                        ))}
+                    </div>
+                </section>
+
+                <section className="animate-fade-in mb-10" style={{ animationDelay: '0.3s' }}>
+                    <SectionTitle><Icons.Award /> Honors & Awards</SectionTitle>
+                    <Card className="bg-white/60 backdrop-blur-md border-t-4 border-t-amber-400">
+                        <div className="relative border-l-2 border-slate-200 ml-2 space-y-6 pt-2 pb-2">
+                            {awards.map((award, index) => (
+                                <div key={index} className="pl-6 relative">
+                                    <div className={`absolute -left-[7px] top-1.5 w-3 h-3 rounded-full ring-4 ring-white ${award.color === 'amber' ? 'bg-amber-400' : 'bg-slate-300'}`}></div>
+                                    <span className={`text-xs font-bold block mb-1 ${award.color === 'amber' ? 'text-amber-600' : 'text-slate-500'}`}>{award.year}</span>
+                                    <h4 className="text-slate-800 font-bold text-base">{award.title}</h4>
+                                    {award.org && <p className="text-sm text-slate-500 mt-1">{award.org}</p>}
+                                </div>
+                            ))}
+                        </div>
+                    </Card>
+                </section>
+
+                <footer className="py-12 border-t border-slate-200 text-center text-slate-400 text-sm font-medium">
+                    <p>© {new Date().getFullYear()} Yufei Wang.</p>
+                </footer>
+            </main>
+        </div>
+    );
+}
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
