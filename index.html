@@ -512,40 +512,58 @@ function App() {
                 </div>
 
                 {/* 研究经历 */}
+                {/* 研究经历 */}
                 <section className="animate-fade-in mb-20" style={{ animationDelay: '0.1s' }}>
                     <SectionTitle><Icons.Code /> Research Experience</SectionTitle>
                     <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
-                            {/* 卡片1 */}
-                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-rose-500">
-                                <div className="mb-4">
-                                    <Badge type="blue">Dec 2023 - Present</Badge>
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">AI Prediction of In-Hospital Cardiac Arrests</h3>
-                                <p className="text-sm text-slate-500 font-bold mb-4">Role: Lead Author (Part-time Remote / Advisory Role)</p>
-                                
-                                <div className="space-y-3 text-slate-600 text-sm mt-auto bg-rose-50/50 p-4 rounded-lg border border-rose-100/50">
-                                    <p><strong className="text-rose-600 block mb-1">Clinical Target:</strong> Address the critical &lt;20% survival rate of in-hospital cardiac arrest.</p>
-                                    <p><strong className="text-slate-800 block mb-1">Algorithm:</strong> Develop <strong>Deep Learning models</strong> for life-saving early warnings.</p>
-                                </div>
-                            </Card>
-
-                            {/* 卡片2 */}
+                            {/* 卡片1 - Regional ECG Platform */}
                             <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-emerald-500">
                                 <div className="mb-4">
                                     <Badge type="blue">Jul 2025 - Present</Badge>
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">Regional ECG Diagnostic Innovation Platform</h3>
-                                <p className="text-sm text-slate-500 font-bold mb-4">Role: Lead Author (Part-time Remote / Advisory Role)</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-1">Regional ECG Diagnostic Innovation Platform</h3>
+                                <p className="text-sm text-slate-500 font-semibold mb-4">Inner Mongolia People's Hospital | Research Affiliate</p>
                                 
-                                <div className="space-y-3 text-slate-600 text-sm mt-auto bg-emerald-50/50 p-4 rounded-lg border border-emerald-100/50">
-                                    <p><strong className="text-emerald-600 block mb-1">Data Foundation:</strong> Provide highly representative, real-world ECG data to power AI models.</p>
-                                    <p><strong className="text-slate-800 block mb-1">Infrastructure:</strong> Construct a <strong>provincial database</strong> via a remote diagnostic network.</p>
+                                <div className="mt-auto bg-emerald-50/50 p-4 rounded-lg border border-emerald-100/50">
+                                    <ul className="space-y-3 text-slate-600 text-sm">
+                                        <li>
+                                            <strong className="text-emerald-700 block mb-0.5">Grant & Leadership:</strong> 
+                                            Served as one of the lead authors of the grant proposal, <strong><em>designing the technical roadmap</em></strong> and successfully <strong><em>securing provincial-level funding</em></strong>.
+                                        </li>
+                                        <li>
+                                            <strong className="text-emerald-700 block mb-0.5">Aim to:</strong> 
+                                            Architect a remote diagnostic platform to collect <strong><em>representative, real-world ECG data</em></strong>, ensuring <strong><em>high-quality datasets for AI model training</em></strong>.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </Card>
+
+                            {/* 卡片2 - AI Prediction */}
+                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-rose-500">
+                                <div className="mb-4">
+                                    <Badge type="blue">Dec 2023 - Present</Badge>
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-1">AI for Prediction of In-Hospital Cardiac Arrest</h3>
+                                <p className="text-sm text-slate-500 font-semibold mb-4">Inner Mongolia People's Hospital | Research Affiliate</p>
+                                
+                                <div className="mt-auto bg-rose-50/50 p-4 rounded-lg border border-rose-100/50">
+                                    <ul className="space-y-3 text-slate-600 text-sm">
+                                        <li>
+                                            <strong className="text-rose-700 block mb-0.5">Clinical Modeling:</strong> 
+                                            Developing <strong><em>early-warning Deep Learning models</em></strong> based on 12-lead ECG datasets to predict malignant arrhythmias, aiming to address the critical <strong><em>&lt;20% survival rate</em></strong> of in-hospital cardiac arrests.
+                                        </li>
+                                        <li>
+                                            <strong className="text-rose-700 block mb-0.5">Grant Success:</strong> 
+                                            Spearheaded the proposal writing and co-designed the technical framework, which resulted in successfully <strong><em>securing provincial-level funding</em></strong> for the project.
+                                        </li>
+                                    </ul>
                                 </div>
                             </Card>
                         </div>
                         
+                        {/* Self-developed ECG-Labeler for Clinicians */}
                         <div className="mt-10">
                             <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-3">
                                 <span className="w-1.5 h-6 bg-slate-800 rounded-full inline-block"></span>Self-developed ECG-Labeler for Clinicians
