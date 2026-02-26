@@ -467,41 +467,34 @@ function App() {
                             </div>
                             
                             <div className="flex-1 text-center md:text-left flex flex-col justify-center">
-                                <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">{profile.name}</h1>
+                                <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-2">{profile.name}</h1>
+                                <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">External-funded Doctoral Researcher</h2>
                                 
                                 <div className="flex flex-col gap-3 text-sm md:text-base font-medium text-slate-700">
-                                    <div className="flex items-center justify-center md:justify-start gap-3">
-                                        <div className="p-1.5 bg-blue-100 rounded text-blue-600"><Icons.GraduationCap className="w-4 h-4" /></div>
-                                        <span>MSc in Clinical Medicine (Cardiology)</span>
+                                    <div className="flex flex-col md:flex-row justify-center md:justify-start gap-1 md:gap-2">
+                                        <span className="font-semibold text-slate-800 shrink-0">Current Location:</span>
+                                        <span>The Netherlands</span>
                                     </div>
-                                    <div className="flex items-center justify-center md:justify-start gap-3">
-                                        <div className="p-1.5 bg-amber-100 rounded text-amber-600"><Icons.Award className="w-4 h-4" /></div>
-                                        <span>4-Year Fully-Funded External Doctoral Fellowship</span>
-                                    </div>
-                                    <div className="flex items-center justify-center md:justify-start gap-3">
-                                        <div className="p-1.5 bg-slate-200 rounded text-slate-600"><Icons.Globe className="w-4 h-4" /></div>
-                                        <span>IELTS Score: 7.0</span>
+                                    <div className="flex flex-col md:flex-row justify-center md:justify-start gap-1 md:gap-2 text-center md:text-left">
+                                        <span className="font-semibold text-slate-800 shrink-0 whitespace-nowrap">Research Focus:</span>
+                                        <span>Machine Learning, Deep Learning & Statistical Analysis in Large-Scale Cardiovascular Cohorts.</span>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 pt-6 border-t border-slate-200/60 text-left bg-slate-50/50 -mx-4 px-4 pb-4 md:-mx-6 md:px-6 rounded-lg md:rounded-xl">
-                                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                        <Icons.Briefcase className="w-3 h-3" /> Current Position
+                                    <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 block">
+                                        CURRENT POSITION
                                     </h2>
                                     <div className="space-y-1">
                                         <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-1">
-                                            <h3 className="font-bold text-slate-800 text-lg">PhD Researcher / Guest Researcher</h3>
-                                            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 inline-block w-fit">Nov 2025 – Present</span>
+                                            <h3 className="font-bold text-slate-800 text-lg">External-funded Doctoral Researcher</h3>
+                                            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 inline-block w-fit">2025 – Present</span>
                                         </div>
-                                        <p className="text-slate-700 font-medium">Erasmus MC, Rotterdam, The Netherlands</p>
-                                        <div className="text-sm text-slate-600 mt-3 space-y-1 bg-white p-3 rounded-md border border-slate-100 shadow-sm">
-                                            <p className="flex gap-2">
-                                                <span className="font-semibold text-slate-400 shrink-0">Funding:</span> 
-                                                <span>Recipient of a <strong>4-Year Fully-Funded External Doctoral Fellowship</strong>.</span>
-                                            </p>
-                                            <p className="flex gap-2">
-                                                <span className="font-semibold text-slate-400 shrink-0">Focus:</span> 
-                                                <span>Cardiovascular diseases.</span>
+                                        <p className="text-slate-700 font-medium">The Netherlands</p>
+                                        <div className="text-sm text-slate-600 mt-3 bg-white p-3 rounded-md border border-slate-100 shadow-sm">
+                                            <p className="flex flex-col md:flex-row gap-1 md:gap-2">
+                                                <span className="font-semibold text-slate-400 shrink-0">Funding Status:</span> 
+                                                <span>Recipient of a fully-funded 4-year doctoral fellowship.</span>
                                             </p>
                                         </div>
                                     </div>
@@ -510,52 +503,52 @@ function App() {
                         </Card>
                     </div>
                 </div>
-
+            
                 {/* 研究经历 */}
-                {/* 研究经历 */}
+                 {/* 研究经历 */}
                 <section className="animate-fade-in mb-20" style={{ animationDelay: '0.1s' }}>
                     <SectionTitle><Icons.Code /> Research Experience</SectionTitle>
                     <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
-                            {/* 卡片1 - Regional ECG Platform */}
-                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-emerald-500">
+                            {/* 卡片1 - Regional ECG Platform (蓝色/Blue 主题) */}
+                            <Card className="flex flex-col hover:-translate-y-1 transition-all border-l-4 border-l-blue-400 hover:border-l-blue-500">
                                 <div className="mb-4">
                                     <Badge type="blue">Jul 2025 - Present</Badge>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-1">Regional ECG Diagnostic Innovation Platform</h3>
                                 <p className="text-sm text-slate-500 font-semibold mb-4">Inner Mongolia People's Hospital | Research Affiliate</p>
                                 
-                                <div className="mt-auto bg-emerald-50/50 p-4 rounded-lg border border-emerald-100/50">
+                                <div className="mt-auto bg-blue-50/50 p-4 rounded-lg border border-blue-100/50">
                                     <ul className="space-y-3 text-slate-600 text-sm">
                                         <li>
-                                            <strong className="text-emerald-700 block mb-0.5">Grant & Leadership:</strong> 
+                                            <strong className="text-blue-700 block mb-0.5">Grant & Leadership:</strong> 
                                             Served as one of the lead authors of the grant proposal, <strong><em>designing the technical roadmap</em></strong> and successfully <strong><em>securing provincial-level funding</em></strong>.
                                         </li>
                                         <li>
-                                            <strong className="text-emerald-700 block mb-0.5">Aim to:</strong> 
+                                            <strong className="text-blue-700 block mb-0.5">Aim to:</strong> 
                                             Architect a remote diagnostic platform to collect <strong><em>representative, real-world ECG data</em></strong>, ensuring <strong><em>high-quality datasets for AI model training</em></strong>.
                                         </li>
                                     </ul>
                                 </div>
                             </Card>
 
-                            {/* 卡片2 - AI Prediction */}
-                            <Card className="flex flex-col hover:-translate-y-1 transition-transform border-t-4 border-t-rose-500">
+                            {/* 卡片2 - AI Prediction (蓝色/Blue 主题) */}
+                            <Card className="flex flex-col hover:-translate-y-1 transition-all border-l-4 border-l-blue-400 hover:border-l-blue-500">
                                 <div className="mb-4">
                                     <Badge type="blue">Dec 2023 - Present</Badge>
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-1">AI for Prediction of In-Hospital Cardiac Arrest</h3>
                                 <p className="text-sm text-slate-500 font-semibold mb-4">Inner Mongolia People's Hospital | Research Affiliate</p>
                                 
-                                <div className="mt-auto bg-rose-50/50 p-4 rounded-lg border border-rose-100/50">
+                                <div className="mt-auto bg-blue-50/50 p-4 rounded-lg border border-blue-100/50">
                                     <ul className="space-y-3 text-slate-600 text-sm">
                                         <li>
-                                            <strong className="text-rose-700 block mb-0.5">Clinical Modeling:</strong> 
+                                            <strong className="text-blue-700 block mb-0.5">Clinical Modeling:</strong> 
                                             Developing <strong><em>early-warning Deep Learning models</em></strong> based on 12-lead ECG datasets to predict malignant arrhythmias, aiming to address the critical <strong><em>&lt;20% survival rate</em></strong> of in-hospital cardiac arrests.
                                         </li>
                                         <li>
-                                            <strong className="text-rose-700 block mb-0.5">Grant Success:</strong> 
+                                            <strong className="text-blue-700 block mb-0.5">Grant Success:</strong> 
                                             Spearheaded the proposal writing and co-designed the technical framework, which resulted in successfully <strong><em>securing provincial-level funding</em></strong> for the project.
                                         </li>
                                     </ul>
@@ -613,7 +606,6 @@ function App() {
                         </div>
                     </div>
                 </section>
-
                 <section className="animate-fade-in mb-20" style={{ animationDelay: '0.15s' }}>
                     <SectionTitle><Icons.Activity /> Clinical & Residency Experience</SectionTitle>
                     <div className="space-y-6">
