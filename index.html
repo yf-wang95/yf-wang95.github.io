@@ -629,7 +629,7 @@ function App() {
                 </section>
 
                 <section className="animate-fade-in mb-20" style={{ animationDelay: '0.2s' }}>
-                    <SectionTitle><Icons.FileText /> Selected Publications</SectionTitle>
+                    <SectionTitle><Icons.FileText />Publication List</SectionTitle>
                     <div className="grid grid-cols-1 gap-8">
                         {publications.map((pub, idx) => (
                             <PublicationItem key={idx} publication={pub} onFullscreen={setSelectedImage} />
